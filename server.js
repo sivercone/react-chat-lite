@@ -15,8 +15,17 @@ const rooms = new Map();
 // и когда мы перейдем по адресу `users` выполнять след. функцию
 // req - request - все то что нам присылает пользователь, и оно хранится в req
 // res - response - ответ - здесь мы решаем что вернуть пользователю
-app.get('/rooms', (req, res) => {
-   res.json(rooms);
+app.get('/rooms/:id', (req, res) => {
+   const { id: roomId } = req.params;
+
+   // проверка - если существует уже комната тогда возвращаем актуальные данные, иначе по дефолту пустой массив
+   const obj = rooms.has(roomId)
+      ? {
+           users: [...rooms.get(roomId).get('users').values()],
+           messages: [...rooms.get(roomId).get('messages').values()],
+        }
+      : { users: [], messages: [] };
+   res.json(obj);
 });
 
 app.post('/rooms', (req, res) => {
@@ -31,14 +40,41 @@ app.post('/rooms', (req, res) => {
          ]),
       );
    }
-   res.json([...rooms.keys()]);
+   res.send();
 });
 
 // когда к нашему webсокету произвели подключение мы выполняем функцию
 // у каждого пользователя будет своя переменная socket, в этой переменной хранится инф. о пользователе
 io.on('connection', (socket) => {
-   socket.on('ROOM:LOGIN', (data) => {
-      console.log(data);
+   socket.on('ROOM:LOGIN', ({ roomId, userName }) => {
+      // подключение в конкретную комнату
+      socket.join(roomId);
+      // получить комнату и пользователей
+      rooms.get(roomId).get('users').set(socket.id, userName);
+      // все пользователи из конкретой комнаты
+      const users = [...rooms.get(roomId).get('users').values()];
+      // в конкретную комнату всем кроме себя отправляем сокет запрос `ROOM:SET_USERS`
+      socket.to(roomId).broadcast.emit('ROOM:SET_USERS', users);
+   });
+
+   socket.on('ROOM:NEW_MESSAGE', ({ roomId, userName, text }) => {
+      const obj = {
+         userName,
+         text,
+      };
+      rooms.get(roomId).get('messages').push(obj);
+      // оповещаем что пользоввтелям пришло сообщение от нас
+      socket.to(roomId).broadcast.emit('ROOM:NEW_MESSAGE', obj);
+   });
+
+   // отлавливаем если кто то вышел из чата
+   socket.on('disconnect', () => {
+      rooms.forEach((value, roomId) => {
+         if (value.get('users').delete(socket.id)) {
+            const users = [...value.get('users').values()];
+            socket.to(roomId).broadcast.emit('ROOM:SET_USERS', users);
+         }
+      });
    });
 
    console.log('userSocketIsConnected, socket:', socket.id);

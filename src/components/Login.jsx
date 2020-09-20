@@ -1,5 +1,4 @@
 import React from 'react';
-import socket from '../socket';
 import axios from 'axios';
 
 function Login({ onLogin }) {
@@ -10,7 +9,7 @@ function Login({ onLogin }) {
    const onEnter = async () => {
       // если поля ввода пустые
       if (!roomId || !userName) {
-         return alert('Denied');
+         return console.log('Denied');
       }
 
       const obj = {
@@ -25,13 +24,13 @@ function Login({ onLogin }) {
    };
 
    return (
-      <>
+      <div className="wrapper">
          <input type="text" placeholder="Логин" value={userName} onChange={(e) => setUserName(e.target.value)} />
-         <input type="text" placeholder="Номер комнаты" value={roomId} onChange={(e) => setRoomId(e.target.value)} />
+         <input type="text" placeholder="Название комнаты" value={roomId} onChange={(e) => setRoomId(e.target.value)} />
          <button disabled={loading} onClick={onEnter}>
             {loading ? 'Вход...' : 'Войти'}
          </button>
-      </>
+      </div>
    );
 }
 
