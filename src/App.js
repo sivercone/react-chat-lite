@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Login from './components/Login';
+import socket from './socket';
+import reducer from './reducer';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+   const [state, dispatch] = React.useReducer(reducer, {
+      // initialState
+      logined: false,
+      userName: null,
+      roomId: null,
+   });
+
+   const onLogin = (obj) => {
+      dispatch({
+         type: 'LOGINED',
+         payload: obj,
+      });
+      // отправляем сокет на бэкенд
+      socket.emit('ROOM:LOGIN', obj);
+   };
+
+   console.log(state);
+
+   return <div className="wrapper">{!state.logined && <Login onLogin={onLogin} />}</div>;
 }
 
 export default App;
