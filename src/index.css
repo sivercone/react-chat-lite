@@ -11,7 +11,8 @@ body {
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
    font-size: 25px;
-   background-color: rgb(230, 241, 255);
+   background-color: #373b40;
+   color: #f2f2f2;
 }
 
 code {
@@ -31,9 +32,10 @@ input {
    margin-bottom: 10px;
    padding: 10px 5px;
    width: 350px;
-   border-radius: 10px;
+   border-radius: 5px;
    border: 1px solid transparent;
    outline: none;
+   background-color: #f2f2f2;
    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
       'Droid Sans', 'Helvetica Neue', sans-serif;
 }
@@ -42,13 +44,13 @@ button {
    font-size: 25px;
    padding: 10px 5px;
    width: 350px;
-   background-color: #2ce29c;
+   background-color: #49bf88;
    border: 1px solid transparent;
-   border-radius: 10px;
+   border-radius: 5px;
    outline: none;
 }
 button:hover {
-   background-color: #2fd495;
+   background-color: #46b481;
 }
 
 ul {
@@ -57,8 +59,8 @@ ul {
 
 li {
    list-style: none;
-   background-color: #b7d4ff;
-   border-radius: 10px;
+   background-color: #888a8c;
+   border-radius: 5px;
    width: 400px;
    text-align: center;
    padding: 10px 0;
@@ -84,7 +86,7 @@ h2 {
    flex-direction: column;
    align-items: center;
    width: 30%;
-   background-color: #d5e4ff;
+   background-color: #222426;
    padding-top: 25px;
 }
 
@@ -92,7 +94,7 @@ h2 {
    display: flex;
    flex-direction: column;
    width: 70%;
-   background-color: #dfeafd;
+   background-color: #373b40;
 }
 
 .chat__messages {
@@ -117,8 +119,9 @@ h1 {
    max-width: 60%;
    margin: 5px 0;
    padding: 10px 20px;
-   border-radius: 10px;
-   background-color: #fff;
+   border-radius: 5px;
+   background-color: #f2f2f2;
+   color: #222426;
 }
 
 .message label {
@@ -141,10 +144,75 @@ form textarea {
    margin: 10px 0;
    width: 50%;
 
-   border-radius: 10px;
+   background-color: #f2f2f2;
+   border-radius: 5px;
    border: 0;
    outline: 0;
    font-size: 22px;
    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
       'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+@media (max-width: 768px) {
+   .chat {
+      flex-direction: column;
+   }
+
+   .chat__sidebar {
+      width: 100%;
+      padding: 0;
+   }
+
+   ul {
+      display: none;
+   }
+   li {
+      display: none;
+   }
+
+   h1 {
+      display: none;
+   }
+
+   h2 {
+      font-size: 20px;
+   }
+
+   .chat__messages__align {
+      width: 100%;
+   }
+
+   .chat__messages {
+      height: 65vh;
+      padding: 0;
+   }
+
+   .message {
+      margin-left: 35px;
+   }
+
+   form {
+      height: 15vh;
+      margin: 50px auto;
+   }
+   form textarea {
+      width: 100%;
+      min-height: 100px;
+   }
+}
+
+@media (max-width: 575px) {
+   button,
+   input {
+      width: 90%;
+   }
+
+   form {
+      margin: 0 auto;
+   }
+
+   form button,
+   form input {
+      width: 100%;
+   }
 }

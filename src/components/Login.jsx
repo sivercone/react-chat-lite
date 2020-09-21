@@ -25,10 +25,10 @@ function Login({ onLogin }) {
 
    return (
       <div className="wrapper">
-         <input type="text" placeholder="Логин" value={userName} onChange={(e) => setUserName(e.target.value)} />
-         <input type="text" placeholder="Название комнаты" value={roomId} onChange={(e) => setRoomId(e.target.value)} />
+         <input type="text" placeholder="Login" value={userName} onChange={(e) => setUserName(e.target.value)} />
+         <input type="text" placeholder="Room name" value={roomId} onChange={(e) => setRoomId(e.target.value)} />
          <button disabled={loading} onClick={onEnter}>
-            {loading ? 'Вход...' : 'Войти'}
+            {loading ? 'Loading...' : 'Sign In'}
          </button>
       </div>
    );

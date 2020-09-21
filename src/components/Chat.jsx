@@ -25,8 +25,8 @@ function Chat({ users, roomId, messages, userName, onAddMessage }) {
    return (
       <div className="chat">
          <div className="chat__sidebar">
-            <h2>Комната #{roomId} </h2>
-            <h2>В сети: {users.length} </h2>
+            <h2>Room #{roomId} </h2>
+            <h2>Online: {users.length} </h2>
             <ul>
                {users.map((name, index) => (
                   <li key={name + index}>{name}</li>
@@ -34,7 +34,7 @@ function Chat({ users, roomId, messages, userName, onAddMessage }) {
             </ul>
          </div>
          <div className="chat__messages__align">
-            <h1>Сообщения</h1>
+            <h1>Messages</h1>
             <div ref={messagesRef} className="chat__messages">
                {messages.map((message) => (
                   <div className="message">
@@ -47,10 +47,10 @@ function Chat({ users, roomId, messages, userName, onAddMessage }) {
                <textarea
                   value={messageValue}
                   onChange={(e) => setMessageValue(e.target.value)}
-                  placeholder="Написать сообщение.."
+                  placeholder="Write a message.."
                   rows="4"></textarea>
                <button onClick={onSendMessage} type="button">
-                  Отправить
+                  Send
                </button>
             </form>
          </div>
